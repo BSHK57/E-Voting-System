@@ -1,4 +1,4 @@
-
+whitenoise
 Pillow
 crispy-bootstrap4
 djangorestframework
