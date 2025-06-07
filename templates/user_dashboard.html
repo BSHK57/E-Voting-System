@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2>User Dashboard</h2>
+    <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+    <ul class="list-group mt-3 mb-4">
+      <li class="list-group-item"><a href="{% url 'available_elections' %}">Available Elections</a></li>
+      <!-- TODO: Add my-votes url when implemented -->
+      <li class="list-group-item"><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

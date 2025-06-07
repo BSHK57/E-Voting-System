@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2>Results for {{ election.title }}</h2>
+    <p>{{ election.description }}</p>
+    <hr>
+    {% if is_completed %}
+      <h4 class="text-success">Election Completed</h4>
+    {% else %}
+      <h4 class="text-warning">Election In Progress</h4>
+    {% endif %}
+    <ul class="list-group mt-3">
+      {% for candidate, count in vote_counts.items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ candidate.user.get_full_name|default:candidate.user.username }}</strong>
+            <span class="text-muted">({{ candidate.party }})</span><br>
+            <small>{{ candidate.manifesto }}</small>
+          </div>
+          <span class="badge badge-primary badge-pill">{{ count }} vote{{ count|pluralize }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="mt-3 text-center">
+      <strong>Total Votes:</strong> {{ total_votes }}
+    </div>
+    <div class="mt-4 text-center">
+      <a href="{% url 'available_elections' %}" class="btn btn-secondary">Back to Elections</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

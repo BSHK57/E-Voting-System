@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2>Vote in {{ election.title }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="candidate">Select Candidate:</label>
+        <div class="row">
+          {% for candidate in candidates %}
+            <div class="col-md-6 mb-3">
+              <div class="card h-100">
+                {% if candidate.image %}
+                  <img src="{{ candidate.image.url }}" class="card-img-top" alt="Profile Photo" style="max-height:180px;object-fit:cover;">
+                {% else %}
+                  <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height:180px;">
+                    <span class="text-muted">No Profile Photo</span>
+                  </div>
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title mb-1">{{ candidate.user.get_full_name|default:candidate.user.username }}</h5>
+                  <p class="mb-1"><strong>Party:</strong> {{ candidate.party }}</p>
+                  <p class="mb-1"><strong>Manifesto:</strong> {{ candidate.manifesto }}</p>
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="radio" name="candidate" id="candidate{{ candidate.id }}" value="{{ candidate.id }}" required>
+                    <label class="form-check-label" for="candidate{{ candidate.id }}">Select</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Submit Vote</button>
+      <a href="{% url 'available_elections' %}" class="btn btn-secondary ml-2">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

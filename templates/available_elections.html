@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2>Available Elections</h2>
+    {% if elections %}
+      <ul class="list-group">
+        {% for election in elections %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ election.title }}</strong><br>
+              <small>{{ election.description }}</small>
+            </div>
+            <div>
+              {% if user.is_authenticated and not user.is_candidate %}
+                <a href="{% url 'vote' election.id %}" class="btn btn-success btn-sm">Vote</a>
+              {% endif %}
+              <a href="{% url 'results' election.id %}" class="btn btn-info btn-sm ml-2">Results</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-center">No available elections at this time.</p>
+      <hr>
+      <h4 class="text-center mt-4">Elections you have already voted in:</h4>
+      <ul class="list-group mt-3">
+        {% for vote in voted_elections %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ vote.voting.title }}</strong><br>
+              <small>{{ vote.voting.description }}</small>
+            </div>
+            <a href="{% url 'results' vote.voting.id %}" class="btn btn-info btn-sm">Results</a>
+            <span class="badge badge-info ml-2">Voted</span>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-center">You have not voted in any elections yet.</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

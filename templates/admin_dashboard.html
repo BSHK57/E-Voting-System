@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome, <strong>{{ user.username }}</strong>!</p>
+    <ul class="list-group mt-3 mb-4">
+      <li class="list-group-item"><a href="/admin/">Go to Django Admin</a></li>
+      <li class="list-group-item"><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+    </ul>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Create New Election</h5>
+            <a href="/admin/voting/voting/add/" class="btn btn-primary btn-block">Create Election</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Manage & Stop Elections</h5>
+            <a href="/admin/voting/voting/" class="btn btn-warning btn-block">View/Stop Elections</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Approve Candidates</h5>
+            <a href="/admin/accounts/candidateprofile/" class="btn btn-success btn-block">Approve Candidates</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
